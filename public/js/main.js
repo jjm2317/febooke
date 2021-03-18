@@ -1,7 +1,7 @@
 let arr = [];
 // --------------------------header 시계 -------------------------
 const $headerTimer = document.querySelector(".header-timer");
-const $logoTitle = document.querySelector('.logo-title');
+const $logoTitle = document.querySelector(".logo-title");
 let title = [
   `<span class="wT">W</span>`,
   `<span>e</span>`,
@@ -29,12 +29,12 @@ let title = [
   `<span>p</span>`,
   `<span>e</span>`,
   `<span>r</span>`,
-  `<span>s</span>`
+  `<span>s</span>`,
 ];
 let titleLength = title.length;
-const $logoImage = document.querySelector('.logo-image');
-const $headerSearch = document.querySelector('.header-search');
-const $header = document.querySelector('.header');
+const $logoImage = document.querySelector(".logo-image");
+const $headerSearch = document.querySelector(".header-search");
+const $header = document.querySelector(".header");
 //헤더 함수, 이벤트
 (function printNow() {
   const now = new Date();
@@ -48,63 +48,61 @@ const $header = document.querySelector('.header');
 })();
 // 첫로딩 이벤트
 let titleCount = 0;
-window.onload = e => {
+window.onload = (e) => {
   const key = setInterval(() => {
     $logoTitle.innerHTML += title[titleCount];
     const $newT = $logoTitle.lastElementChild;
-    $newT.style.left = `${titleCount*($newT.textContent===''||3.7)}%`;
+    $newT.style.left = `${titleCount * ($newT.textContent === "" || 3.7)}%`;
     if (titleCount === titleLength - 1) {
-      clearInterval(key)
-      $logoTitle.style.transition = '2s';
-      $logoTitle.classList.add('midTime');
+      clearInterval(key);
+      $logoTitle.style.transition = "2s";
+      $logoTitle.classList.add("midTime");
       setTimeout(() => {
-        const $firstT = document.querySelector('.firstT');
-        const $secondT = document.querySelector('.secondT');
-        $logoTitle.classList.add('lastTime');
-        $firstT.style.transition = '2s';
-        $secondT.style.transition = '2s';
-      }, 2000)
+        const $firstT = document.querySelector(".firstT");
+        const $secondT = document.querySelector(".secondT");
+        $logoTitle.classList.add("lastTime");
+        $firstT.style.transition = "2s";
+        $secondT.style.transition = "2s";
+      }, 2000);
       setTimeout(() => {
-        $logoImage.classList.add('showImage');
-        $headerSearch.classList.add('showSearch');
-        $logoTitle.classList.add('downT');
-        $header.classList.add('showColor');
-      }, 4000)
-    };
+        $logoImage.classList.add("showImage");
+        $headerSearch.classList.add("showSearch");
+        $logoTitle.classList.add("downT");
+        $header.classList.add("showColor");
+      }, 4000);
+    }
     ++titleCount;
   }, 120);
 
-  const $loginIn = document.querySelector('.login-in');
-  const $logOut = document.querySelector('.logout');
-  const $signup = document.querySelector('.signup');
+  const $loginIn = document.querySelector(".login-in");
+  const $logOut = document.querySelector(".logout");
+  const $signup = document.querySelector(".signup");
 
-  if (sessionStorage.getItem('login')) {
-    $loginIn.classList.add('on');
-    $logOut.classList.remove('on');
-    $signup.classList.add('on');
+  if (sessionStorage.getItem("login")) {
+    $loginIn.classList.add("on");
+    $logOut.classList.remove("on");
+    $signup.classList.add("on");
   } else {
-    $loginIn.classList.remove('on');
-    $logOut.classList.add('on');
-    $signup.classList.remove('on');
+    $loginIn.classList.remove("on");
+    $logOut.classList.add("on");
+    $signup.classList.remove("on");
   }
-  const $searchInput = document.querySelector('.search-input');
+  const $searchInput = document.querySelector(".search-input");
 
-
-  console.log($searchInput)
-  $headerSearch.onsubmit = e => {
+  console.log($searchInput);
+  $headerSearch.onsubmit = (e) => {
     e.preventDefault();
-
-  }
-  $headerSearch.onkeyup = async e => {
+  };
+  $headerSearch.onkeyup = async (e) => {
     e.preventDefault();
-    if (e.key !== 'Enter' || e.target.value === '') return;
-    console.log(e.target.value)
-    const res = await fetch('/board')
+    if (e.key !== "Enter" || e.target.value === "") return;
+    console.log(e.target.value);
+    const res = await fetch("/board");
     arr = await res.json();
 
-    arr = arr.filter(item => item.nickname === e.target.value)
-    console.log(arr)
-    let html = ''
+    arr = arr.filter((item) => item.nickname === e.target.value);
+    console.log(arr);
+    let html = "";
     $leftContainer.innerHTML = `<div class="board">
   <div class="box2">
   <h2 class="tech-heading">TECH Board</h2>
@@ -154,101 +152,96 @@ window.onload = e => {
           </li>
       </ul>
   </div>
-</div>`
+</div>`;
     render(arr);
-  }
-}
+  };
+};
 // 기술 게시판 변수, 함수, 이벤트
 // 게시판 statement
-const $chatBoard = document.querySelector('.chat-board');
-const $chatTitle = document.querySelector('.chat-title');
-const $techStatement = document.querySelector('.tech-statement');
-const $HotHeading = document.querySelector('.Hot-heading');
-const $techNews = document.querySelector('.tech-news');
-const $creatorTitle = document.querySelector('.creator-title');
-const $creator = document.querySelector('.creator');
+const $chatBoard = document.querySelector(".chat-board");
+const $chatTitle = document.querySelector(".chat-title");
+const $techStatement = document.querySelector(".tech-statement");
+const $HotHeading = document.querySelector(".Hot-heading");
+const $techNews = document.querySelector(".tech-news");
+const $creatorTitle = document.querySelector(".creator-title");
+const $creator = document.querySelector(".creator");
 
 const move = async () => {
   // console.log('크릭');
-  if(!JSON.parse(sessionStorage.getItem('login'))) return;
-  const a =JSON.parse(sessionStorage.getItem('login'));
-    await fetch('/chatUser/1',{
-      method:'PATCH',
-      headers:{'content-type':'application/json'},
-      body:JSON.stringify({
-        nickname: a.nickname
-      })
-    })
-    location.assign('http://localhost:8000');
+  if (!JSON.parse(sessionStorage.getItem("login"))) return;
+  const a = JSON.parse(sessionStorage.getItem("login"));
+  await fetch("/chatUser/1", {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      nickname: a.nickname,
+    }),
+  });
+  console.log("move");
+  location.assign("http://localhost:8000");
+};
 
-
-  }
- 
-
-
-
-$chatBoard.addEventListener('click', move)
+$chatBoard.addEventListener("click", move);
 
 const hover1 = () => {
   // console.log('클릭');
-  $chatTitle.style.display = 'block';
-
-}
+  $chatTitle.style.display = "block";
+};
 const hover2 = () => {
-  $HotHeading.style.display = 'block';
-}
+  $HotHeading.style.display = "block";
+};
 
 const hover3 = () => {
-  $creatorTitle.style.display = 'block';
-}
-$chatBoard.addEventListener('mouseover', hover1)
-$techNews.addEventListener('mouseover', hover2)
-$creator.addEventListener('mouseover', hover3)
+  $creatorTitle.style.display = "block";
+};
+$chatBoard.addEventListener("mouseover", hover1);
+$techNews.addEventListener("mouseover", hover2);
+$creator.addEventListener("mouseover", hover3);
 
 const hoverEnd1 = () => {
   // console.log('클릭');
-  $chatTitle.style.display = 'none';
-}
+  $chatTitle.style.display = "none";
+};
 const hoverEnd2 = () => {
   // console.log('클릭');
-  $HotHeading.style.display = 'none';
-}
+  $HotHeading.style.display = "none";
+};
 const hoverEnd3 = () => {
   // console.log('클릭');
-  $creatorTitle.style.display = 'none';
-}
-$chatBoard.addEventListener('mouseout', hoverEnd1);
-$techNews.addEventListener('mouseout', hoverEnd2);
-$creator.addEventListener('mouseout', hoverEnd3);
-const $techBoard = document.querySelector('.tech-board');
+  $creatorTitle.style.display = "none";
+};
+$chatBoard.addEventListener("mouseout", hoverEnd1);
+$techNews.addEventListener("mouseout", hoverEnd2);
+$creator.addEventListener("mouseout", hoverEnd3);
+const $techBoard = document.querySelector(".tech-board");
 
 let stateCount = 0;
 let stateColor = 0;
 setInterval(() => {
   if (stateCount) {
-    $techBoard.classList.remove('transStatement');
+    $techBoard.classList.remove("transStatement");
     --stateCount;
   } else {
-    $techBoard.classList.add('transStatement');
+    $techBoard.classList.add("transStatement");
     ++stateCount;
   }
 }, 1000);
 setTimeout(() => {
   setInterval(() => {
     [...$techStatement.children].forEach((item, i) => {
-      item.classList.toggle('stateColor', i === stateColor);
-    })
-    stateColor === 2 ? stateColor = 0 : stateColor++;
-  }, 1500)
-}, 5000)
-const $leftContainer = document.querySelector('.left-container')
-const $techTitle = document.querySelector('.tech-title')
+      item.classList.toggle("stateColor", i === stateColor);
+    });
+    stateColor === 2 ? (stateColor = 0) : stateColor++;
+  }, 1500);
+}, 5000);
+const $leftContainer = document.querySelector(".left-container");
+const $techTitle = document.querySelector(".tech-title");
 
 // 렌더링
-$techTitle.onclick = async e => {
+$techTitle.onclick = async (e) => {
   e.preventDefault();
-  if (!e.target.matches('.tech-title-btn')) return
-  let html = ''
+  if (!e.target.matches(".tech-title-btn")) return;
+  let html = "";
   $leftContainer.innerHTML = `<div class="board">
   <div class="box2">
   <h2 class="tech-heading">TECH Board</h2>
@@ -298,21 +291,21 @@ $techTitle.onclick = async e => {
           </li>
       </ul>
   </div>
-</div>`
-  const res = await fetch('/board');
+</div>`;
+  const res = await fetch("/board");
   arr = await res.json();
   render(arr);
-}
+};
 const render = async (todo) => {
-  const $boardList = document.querySelector('.board-list');
+  const $boardList = document.querySelector(".board-list");
   //글쓰기 버튼
-  const $writeBtn = document.querySelector('.write-btn');
+  const $writeBtn = document.querySelector(".write-btn");
   // login check
-  const $loginCheck = document.querySelector('.login-check');
-  const $btnGroup = document.querySelector('.btn-group');
-  const $selectOption = document.querySelector('.select-option');
-  let html = '';
-  [...todo].forEach(list => {
+  const $loginCheck = document.querySelector(".login-check");
+  const $btnGroup = document.querySelector(".btn-group");
+  const $selectOption = document.querySelector(".select-option");
+  let html = "";
+  [...todo].forEach((list) => {
     html += `<li id="${list.id}">
     <a href="#">${list.title}</a>
     <span class="author">${list.nickname}</span>
@@ -323,96 +316,102 @@ const render = async (todo) => {
         <span class="date"></span>
     </time>
     <span class="click">${list.clickcount}</span>
-</li>`
-  })
+</li>`;
+  });
   $boardList.innerHTML = html;
   // 컨텐트 보기
-  $boardList.onclick = async e => {
+  $boardList.onclick = async (e) => {
     e.preventDefault();
-    if (!e.target.matches('.board-list > li > a')) return;
+    if (!e.target.matches(".board-list > li > a")) return;
     let counter = 1;
-    console.log(e.target.parentNode.id)
+    console.log(e.target.parentNode.id);
     const res = await fetch(`/board/${e.target.parentNode.id}`);
     arr = await res.json();
-    console.log(arr)
-    const clickcounter = [arr].find((item) => item.id === +e.target.parentNode.id)
+    console.log(arr);
+    const clickcounter = [arr].find(
+      (item) => item.id === +e.target.parentNode.id
+    );
     await fetch(`/board/${e.target.parentNode.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        clickcount: clickcounter.clickcount + counter
+        clickcount: clickcounter.clickcount + counter,
       }),
     });
     render(arr);
-    sessionStorage.setItem('content', JSON.stringify({
-      id: +e.target.parentNode.id,
-      nickname: arr.nickname
-    }))
-    location.assign('../../content.html')
-  }
+    sessionStorage.setItem(
+      "content",
+      JSON.stringify({
+        id: +e.target.parentNode.id,
+        nickname: arr.nickname,
+      })
+    );
+    location.assign("../../content.html");
+  };
   $writeBtn.onclick = () => {
-    if (!sessionStorage.getItem('login')) {
-      console.log('login이 필요합니다.')
-      $loginCheck.classList.add('on');
-      $btnGroup.onclick = e => {
-        if (e.target.matches('.btn-yes')) location.assign('../signin.html');
-        else if (e.target.matches('.btn-no')) $loginCheck.classList.remove('on');
-      }
+    if (!sessionStorage.getItem("login")) {
+      console.log("login이 필요합니다.");
+      $loginCheck.classList.add("on");
+      $btnGroup.onclick = (e) => {
+        if (e.target.matches(".btn-yes")) location.assign("../signin.html");
+        else if (e.target.matches(".btn-no"))
+          $loginCheck.classList.remove("on");
+      };
     } else {
-      window.location.href = './write.html'
+      window.location.href = "./write.html";
     }
-  }
+  };
   $selectOption.onchange = async (e) => {
     // if(최근 날짜순을 클릭했다면)
-    if (e.target.value === 'least-date') {
-      const res2 = await fetch('/board?_sort=id,views&_order=desc,asc');
+    if (e.target.value === "least-date") {
+      const res2 = await fetch("/board?_sort=id,views&_order=desc,asc");
       const least = await res2.json();
       console.log(least); // <- board db json (배열안에 객체)
       render(least);
     }
     // // if(과거 날짜순을 클릭했다면)
-    else if (e.target.value === 'last-date') {
-      const res3 = await fetch('/board');
+    else if (e.target.value === "last-date") {
+      const res3 = await fetch("/board");
       const last = await res3.json();
       console.log(last); // <- board db json (배열안에 객체)
       render(last);
-    } else if (e.target.value === 'high') {
-      console.log(e.target.value)
-      const res4 = await fetch('/board/?_sort=clickcount&_order=desc');
+    } else if (e.target.value === "high") {
+      console.log(e.target.value);
+      const res4 = await fetch("/board/?_sort=clickcount&_order=desc");
       const high = await res4.json();
       console.log(high); // <- board db json (배열안에 객체)
       render(high);
-    } else if (e.target.value === 'row') {
-      const res5 = await fetch('/board/?_sort=clickcount&_order=asc');
+    } else if (e.target.value === "row") {
+      const res5 = await fetch("/board/?_sort=clickcount&_order=asc");
       const row = await res5.json();
       console.log(row); // <- board db json (배열안에 객체)
       render(row);
-    } else if (e.target.value === 'my-content') {
-      const res6 = await fetch('/board/');
+    } else if (e.target.value === "my-content") {
+      const res6 = await fetch("/board/");
       arr = await res6.json();
-      const LoginUser = JSON.parse(sessionStorage.getItem('login'));
-      arr = arr.filter(item => item.nickname === LoginUser.nickname)
-      console.log(arr)
-      render(arr)
+      const LoginUser = JSON.parse(sessionStorage.getItem("login"));
+      arr = arr.filter((item) => item.nickname === LoginUser.nickname);
+      console.log(arr);
+      render(arr);
       // console.log(myContent); // <- board db json (배열안에 객체)
       // render(myContent);
     }
-  }
-}
+  };
+};
 // 메인으로 가기
 // $header.onclick = e => {
 //   e.preventDefault();
 //   location.assign('../../index.html')
 // }
-const $techNewList = document.querySelector('.tech-new-list');
-const $techNewHeadings = document.querySelector('.tech-new-headings');
+const $techNewList = document.querySelector(".tech-new-list");
+const $techNewHeadings = document.querySelector(".tech-new-headings");
 // tech-list
-const render2 = todo => {
-  let headings = '';
-  let html = '';
-  [...todo].forEach(list => {
+const render2 = (todo) => {
+  let headings = "";
+  let html = "";
+  [...todo].forEach((list) => {
     headings += `<li id ="${list.id}" class="top-tech-new-item">
   <a href="#" class="top-new-title">${list.title}</a>
   <span class="top-author">${list.nickname}</span>
@@ -423,16 +422,16 @@ const render2 = todo => {
       <span class="date"></span>
   </time>
   <span class="click">${list.clickcount}</span>
-</li>`
-  })
+</li>`;
+  });
   // $techNewHeadings.innerHTML = headings;
   $techNewList.innerHTML = html;
-}
+};
 // hot -list
-const $techHotList = document.querySelector('.tech-hot-list')
-const render3 = todo => {
-  let html = '';
-  [...todo].forEach(list => {
+const $techHotList = document.querySelector(".tech-hot-list");
+const render3 = (todo) => {
+  let html = "";
+  [...todo].forEach((list) => {
     html += `<li id ="${list.id}" class="tech-new-item carousel-item">
   <a class="new-item-heading">${list.title}</a>
   <span class="author">${list.nickname}</span>
@@ -443,36 +442,38 @@ const render3 = todo => {
       <span class="date"></span>
   </time>
   <span class="click">${list.clickcount}</span>
-</li>`
-  })
+</li>`;
+  });
   // $techHotList.innerHTML = html;
-}
-const list = async e => {
+};
+const list = async (e) => {
   // const res = await fetch('/board/?_sort=id,views&_order=desc,asc&_page=1&_limit=4');
   // arr = await res.json();
   // render2(arr);
-  const res1 = await fetch('/board/?_sort=clickcount&_order=desc&_page=1&_limit=4')
+  const res1 = await fetch(
+    "/board/?_sort=clickcount&_order=desc&_page=1&_limit=4"
+  );
   arr = await res1.json();
   render3(arr);
   // const carousel = new Carousel();
-}
+};
 list();
 // li go write
 // 로그인
-const $Login = document.querySelector('.login');
-$Login.onclick = e => {
+const $Login = document.querySelector(".login");
+$Login.onclick = (e) => {
   e.preventDefault();
   // console.log('gg')
   // console.log(e.target)
-  if (e.target.matches('.login > .login-in')) {
-    location.href = '../signin.html';
-  } else if(e.target.matches('.login > .signup'))  {
-    location.href = '../signup.html';
-  }else{
+  if (e.target.matches(".login > .login-in")) {
+    location.href = "../signin.html";
+  } else if (e.target.matches(".login > .signup")) {
+    location.href = "../signup.html";
+  } else {
     sessionStorage.clear();
-    location.href = '../index.html';
+    location.href = "../index.html";
   }
-}
+};
 
 // $Login.addEventListener('click',  )
 

@@ -36,6 +36,13 @@
       "password": "123456",
       "nickname": "주현",
       "phone": "01092742066"
+    },
+    {
+      "name": "정지만",
+      "id": "wlaks2317@gmail.com",
+      "password": "rjsrn1",
+      "nickname": "jiman",
+      "phone": "01094533317"
     }
   ],
   "board": [
@@ -59,7 +66,7 @@
   ],
   "chatUser": [
     {
-      "nickname": "jungjh",
+      "nickname": "jiman",
       "id": 1
     }
   ]
